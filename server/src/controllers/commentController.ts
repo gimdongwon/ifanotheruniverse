@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Comment, { IComment } from '../models/Comment';
-import Post from '../models/Post';
+import Comment, { IComment } from 'app/models/Comment';
+import Post from 'app/models/Post';
 
 export const createComment = async (
   req: Request,

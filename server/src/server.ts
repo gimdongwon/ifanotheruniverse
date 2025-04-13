@@ -2,11 +2,11 @@ import express, { Application } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import connectDB from './config/db';
-import userRoutes from './routes/userRoutes';
-import authRoutes from './routes/authRoutes';
-import postRoutes from './routes/postRoutes';
-import commentRoutes from './routes/commentRoutes';
+import connectDB from 'app/config/db';
+import userRoutes from 'app/routes/userRoutes';
+import authRoutes from 'app/routes/authRoutes';
+import postRoutes from 'app/routes/postRoutes';
+import commentRoutes from 'app/routes/commentRoutes';
 
 dotenv.config();
 connectDB();

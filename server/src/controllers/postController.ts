@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Post, { IPost } from '../models/Post';
+import Post, { IPost } from 'app/models/Post';
 
 export const createPost = async (
   req: Request,

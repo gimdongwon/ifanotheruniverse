@@ -10,7 +10,8 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.13.2",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
@@ -19,12 +20,13 @@
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",
+    "eslint-import-resolver-typescript": "^4.3.2",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon -r tsconfig-paths/register src/server.ts"
   }
 }

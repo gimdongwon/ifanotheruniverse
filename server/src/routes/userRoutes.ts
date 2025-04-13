@@ -5,7 +5,7 @@ import {
   updateUser,
   findUserByName,
   findPasswordByEmail,
-} from '../controllers/userController';
+} from 'app/controllers/userController';
 
 const router = express.Router();
 

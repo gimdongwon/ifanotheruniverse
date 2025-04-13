@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import User, { IUser } from '../models/User';
+import User, { IUser } from 'app/models/User';
 
 export const registerUser = async (
   req: Request,

@@ -6,8 +6,16 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "app/*": ["src/*"]
+    }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "scripts": {
+    "dev": "ts-node -r tsconfig-paths/register src/server.ts",
+    "start": "node dist/server.js"
+  }
 }

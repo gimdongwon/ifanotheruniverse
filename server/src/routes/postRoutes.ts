@@ -5,8 +5,8 @@ import {
   getPostById,
   updatePost,
   deletePost,
-} from '../controllers/postController';
-import { verifyToken } from '../middleware/authMiddleware';
+} from 'app/controllers/postController';
+import { verifyToken } from 'app/middleware/authMiddleware';
 
 const router = express.Router();
 
