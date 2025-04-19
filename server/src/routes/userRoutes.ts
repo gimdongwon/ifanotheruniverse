@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  registerUser,
+  signupUser,
   deleteUser,
   updateUser,
   findUserByName,
@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 // 회원가입 라우트
-router.post('/register', registerUser);
+router.post('/signup', signupUser);
 
 // 회원 삭제 라우트
 router.delete('/delete', deleteUser);

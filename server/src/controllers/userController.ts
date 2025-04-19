@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import User, { IUser } from 'app/models/User';
 
-export const registerUser = async (
+export const signupUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -27,7 +27,7 @@ export const registerUser = async (
 
     res
       .status(201)
-      .json({ message: 'User registered successfully', user: { name, email } });
+      .json({ message: 'User signuped successfully', user: { name, email } });
   } catch (error) {
     res.status(500).json({
       message: 'Server error',

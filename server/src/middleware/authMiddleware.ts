@@ -6,15 +6,12 @@ export const verifyToken = (
   res: Response,
   next: NextFunction
 ): void => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!token) {
     res.status(401).json({ message: 'Unauthorized: No token provided' });
     return;
   }
-
-  const token = authHeader.split(' ')[1]; // Bearer 토큰에서 실제 토큰 추출
-
   try {
     const decoded = jwt.verify(
       token,

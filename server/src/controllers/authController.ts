@@ -25,11 +25,20 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({
-      message: 'Login successful',
-      token,
-      user: { name: user.name, email: user.email },
-    });
+    res
+      .cookie('token', token, {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        secure: false,
+        sameSite: 'lax',
+        maxAge: 1000 * 60 * 60, // 1시간
+      })
+      .status(200)
+      .json({
+        message: 'Login successful',
+        token,
+        user: { name: user.name, email: user.email },
+      });
   } catch (error) {
     res.status(500).json({
       message: 'Server error',
@@ -44,7 +53,38 @@ export const logoutUser = async (
 ): Promise<void> => {
   try {
     // 클라이언트 측에서 토큰을 삭제하도록 요청
-    res.status(200).json({ message: 'Logout successful' });
+    res
+      .clearCookie('token', {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        secure: false,
+        sameSite: 'lax',
+      })
+      .status(200)
+      .json({ message: 'Logout successful' });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server error',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+};
+
+export const verifyUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = (req as any).user?.id; // 요청 객체에서 사용자 정보 가져오기
+
+    if (!userId) {
+      res.status(401).json({ message: 'Invalid token' });
+    }
+    const user = await User.findById(userId).select('-password'); // 비밀번호 제외하고 사용자 정보 가져오기
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ message: 'Success', user });
   } catch (error) {
     res.status(500).json({
       message: 'Server error',
