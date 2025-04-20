@@ -19,14 +19,15 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: '*',
+    // origin: 'http://localhost:3000',
+    origin: true,
     credentials: true,
   })
 );
 app.use(bodyParser.json());
 app.use(cookieParser());
 // Routes
-app.use('/api/users', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
