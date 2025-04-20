@@ -2,13 +2,17 @@
 import LoginForm from 'app/components/forms/LoginForm';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getMyInfo } from 'app/lib';
+import { getMyInfo } from 'app/lib/api';
 import { useUserStore } from 'app/store/userStore';
 
 export default function LoginPage() {
   const router = useRouter();
   const { setUser } = useUserStore();
   const [isChecking, setIsChecking] = useState(true);
+
+  const onClickSignup = () => {
+    router.push('/signup');
+  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -29,6 +33,9 @@ export default function LoginPage() {
   return (
     <main style={{ maxWidth: 400, margin: '0 auto', padding: '2rem' }}>
       <LoginForm />
+      <button type='button' onClick={onClickSignup}>
+        회원가입
+      </button>
     </main>
   );
 }

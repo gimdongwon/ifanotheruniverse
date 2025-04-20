@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getMyInfo } from 'app/lib';
-import { AxiosError } from 'axios';
+import Header from 'app/components/common/Header';
 import { useUserStore } from 'app/store/userStore';
-import LogoutButton from 'app/components/common/LogoutButton';
+import { useEffect } from 'react';
+import { getMyInfo } from 'app/lib/api';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function MyPage() {
   const router = useRouter();
   const { user, setUser } = useUserStore();
-
+  console.log('🔥 [mypage] 렌더됨 (client)');
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -22,23 +22,24 @@ export default function MyPage() {
           axiosErr.response?.status === 401 ||
           axiosErr.response?.status === 403
         ) {
-          router.replace('/login'); // 🔁 로그인 페이지로 이동
+          router.replace('/login');
         } else {
           console.error('Unexpected error:', err);
         }
       }
     };
-
+    if (user) {
+      return;
+    }
     fetchUser();
   }, [router, setUser, user]);
-
   if (!user) return <p>로딩 중...</p>;
 
   return (
-    <div>
+    <main style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
+      <Header />
       <h2>{user.name}님의 마이페이지</h2>
       <p>{user.email}</p>
-      <LogoutButton />
-    </div>
+    </main>
   );
 }
