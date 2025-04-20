@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from 'app/lib';
-import { LoginRequest } from 'app/lib/auth';
+import { login } from 'app/lib/api';
+import { LoginRequest } from 'app/lib/api/auth';
 
 export default function LoginForm() {
   const router = useRouter();

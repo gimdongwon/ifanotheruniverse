@@ -1,7 +1,7 @@
 // lib/axiosInstance.ts
 import axios from 'axios';
 
-const instance = axios.create({
+const http = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true, // 필요 시 (쿠키 전송 등)
   headers: {
@@ -9,4 +9,4 @@ const instance = axios.create({
   },
 });
 
-export default instance;
+export default http;

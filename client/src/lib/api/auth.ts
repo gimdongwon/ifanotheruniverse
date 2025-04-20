@@ -1,4 +1,4 @@
-import axios from 'app/lib/api';
+import http from './api';
 import { AxiosResponse } from 'axios';
 
 export interface LoginRequest {
@@ -19,11 +19,16 @@ export interface LoginResponse {
 export const login = async (
   payload: LoginRequest
 ): Promise<AxiosResponse<LoginResponse>> => {
-  const res = await axios.post('/api/auth/login', payload);
+  const res = await http.post('/api/auth/login', payload);
   return res;
 };
 
 export const logout = async (): Promise<AxiosResponse> => {
-  const res = await axios.post('/api/auth/logout');
+  const res = await http.post('/api/auth/logout');
+  return res;
+};
+
+export const getMyInfo = async (): Promise<AxiosResponse> => {
+  const res = await http.get(`/api/auth/me`);
   return res;
 };

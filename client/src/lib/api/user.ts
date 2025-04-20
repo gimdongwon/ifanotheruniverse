@@ -1,4 +1,4 @@
-import axios from 'app/lib/api';
+import http from './api';
 import { AxiosResponse } from 'axios';
 
 interface SignupRequest {
@@ -20,11 +20,6 @@ export interface SignupResponse {
 export const signup = async (
   payload: SignupRequest
 ): Promise<AxiosResponse<SignupResponse>> => {
-  const res = await axios.post(`/api/auth/signup`, payload);
-  return res;
-};
-
-export const getMyInfo = async (): Promise<AxiosResponse> => {
-  const res = await axios.get(`/api/auth/me`);
+  const res = await http.post(`/api/user/signup`, payload);
   return res;
 };
