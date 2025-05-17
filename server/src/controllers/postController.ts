@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Post, { IPost } from 'app/models/Post';
+import { Types } from 'mongoose';
 
 export const createPost = async (
   req: Request,
@@ -30,7 +31,25 @@ export const createPost = async (
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const posts = await Post.find().populate('author', 'name email'); // 작성자 정보 포함
+    const rowPosts = await Post.find().populate('author', 'name email').lean(); // 작성자 정보 포함
+
+    const posts = rowPosts.map((post) => {
+      const author = post.author as unknown as {
+        _id: Types.ObjectId;
+        name: string;
+        email: string;
+      };
+      return {
+        ...post,
+        id: post._id.toString(),
+        author: {
+          id: author._id.toString(),
+          name: author.name,
+          email: author.email,
+        },
+      };
+    });
+
     res.status(200).json({ message: 'Posts retrieved successfully', posts });
   } catch (error) {
     res.status(500).json({
@@ -47,11 +66,24 @@ export const getPostById = async (
   const { id } = req.params;
 
   try {
-    const post = await Post.findById(id).populate('author', 'name email');
-    if (!post) {
+    const rowPost = await Post.findById(id)
+      .populate('author', 'name email')
+      .lean();
+    if (!rowPost) {
       res.status(404).json({ message: 'Post not found' });
       return;
     }
+    const { _id, author, ...rest } = rowPost;
+
+    const post = {
+      ...rest,
+      id: _id.toString(),
+      author: {
+        id: (author as any)._id.toString(),
+        name: (author as any).name,
+        email: (author as any).email,
+      },
+    };
 
     res.status(200).json({ message: 'Post retrieved successfully', post });
   } catch (error) {

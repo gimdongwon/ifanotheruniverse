@@ -1,20 +1,43 @@
 'use client';
+
 import PostCard from 'app/components/PostCard';
+import { useQuery } from '@tanstack/react-query';
+import { getPosts, PostCardProps } from 'app/lib/api';
+import styled from 'styled-components';
 
 export default function Home() {
-  const dummyPost = {
-    title: '윈드의 첫 블로그 글 ✍️',
-    summary: '이 글은 내가 만든 커뮤니티 블로그의 첫 포스트입니다!',
-    author: 'Wind',
-    createdAt: '2025-04-06',
-  };
+  const { data: posts } = useQuery<PostCardProps[]>({
+    queryKey: ['posts'],
+    queryFn: getPosts,
+  });
+  console.log(posts);
   return (
-    <div>
-      <PostCard
-        id={'123'}
-        {...dummyPost}
-        onClick={() => alert('상세 페이지로 이동!')}
-      />
-    </div>
+    <Container>
+      <h2>최신 글</h2>
+      {posts?.map((post: PostCardProps) => (
+        <PostCard
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          summary={post.summary}
+          author={post.author.name}
+          createdAt={new Date(post.createdAt).toLocaleDateString()}
+        />
+      ))}
+    </Container>
   );
 }
+
+const Container = styled.div`
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+`;
+
+// const Meta = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   font-size: 12px;
+//   color: #999;
+//   margin-top: 12px;
+// `;

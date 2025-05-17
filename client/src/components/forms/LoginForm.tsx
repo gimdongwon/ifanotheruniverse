@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from 'app/lib/api';
-import { LoginRequest } from 'app/lib/api/auth';
+import { LoginRequest } from 'app/lib/api/login/auth';
+import { useUserStore } from 'app/store/userStore';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function LoginForm() {
     password: '',
   });
   const [error, setError] = useState('');
+  const { setUser } = useUserStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +28,12 @@ export default function LoginForm() {
       const { status, data } = await login(form);
 
       if (status === 200 && data.token) {
-        localStorage.setItem('token', data.token); // ✅ 이후 인증 처리에 사용
+        localStorage.setItem('userToken', data.token); // ✅ 이후 인증 처리에 사용
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          setError('유효하지 않은 사용자 데이터입니다.');
+        }
         router.push('/');
       } else {
         setError(data.message || '로그인 실패');

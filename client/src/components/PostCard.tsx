@@ -4,7 +4,7 @@
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-interface PostCardProps {
+export interface Props {
   id: string;
   title: string;
   summary: string;
@@ -19,7 +19,7 @@ export default function PostCard({
   summary,
   author,
   createdAt,
-}: PostCardProps) {
+}: Props) {
   const router = useRouter();
 
   return (

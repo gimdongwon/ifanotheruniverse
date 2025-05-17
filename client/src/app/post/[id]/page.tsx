@@ -3,35 +3,30 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-
-interface Post {
-  id: string;
-  title: string;
-  content: string;
-  author: string;
-  createdAt: string;
-}
+import { getPostById, PostCardProps } from 'app/lib/api';
 
 export default function PostDetailPage() {
   const { id } = useParams();
   const postId = id as string;
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<PostCardProps | null>(null);
 
   useEffect(() => {
-    // 임시 dummy fetch
     const fetchPost = async () => {
-      // 실제로는 API 호출
-      const dummy = {
-        id: postId,
-        title: '윈드의 첫 번째 포스트',
-        content: '이것은 글의 본문입니다. styled-components도 쓸 수 있어요!',
-        author: 'Wind',
-        createdAt: '2025-04-06',
-      };
-      setPost(dummy);
+      try {
+        const posts = await getPostById(postId);
+        console.log(posts);
+
+        setPost(posts);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    if (id) fetchPost();
+    fetchPost();
+    // Cleanup function to avoid memory leaks
+    return () => {
+      setPost(null);
+    };
   }, [id, postId]);
 
   if (!post) return <p>불러오는 중...</p>;
@@ -40,7 +35,7 @@ export default function PostDetailPage() {
     <div style={{ maxWidth: 800, margin: '0 auto', padding: 40 }}>
       <h1>{post.title}</h1>
       <p style={{ color: '#999', fontSize: 14 }}>
-        by {post.author} | {post.createdAt}
+        by {post.author.name} | {post.createdAt}
       </p>
       <div style={{ marginTop: 20, lineHeight: '1.6' }}>{post.content}</div>
     </div>

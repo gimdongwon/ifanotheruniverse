@@ -1,4 +1,4 @@
-import http from './api';
+import http from '../api';
 import { AxiosResponse } from 'axios';
 
 export interface LoginRequest {

@@ -7,8 +7,7 @@ import { useUserStore } from 'app/store/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
-  const { user } = useUserStore();
-  const clearUser = useUserStore((state) => state.clearUser);
+  const { clearUser, user } = useUserStore();
   const pathname = usePathname();
   const router = useRouter();
 

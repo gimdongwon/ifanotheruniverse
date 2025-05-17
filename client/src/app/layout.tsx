@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from 'app/lib/styled-components';
+import { ReactQueryProvider } from 'app/components/common/ReactQueryProvider';
+import AuthInitializer from 'app/components/common/AuthInitializer';
 
 export const metadata: Metadata = {
   title: 'IFANOTHERUNIVERSE',
@@ -15,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <ReactQueryProvider>
+          <StyledComponentsRegistry>
+            <AuthInitializer>{children}</AuthInitializer>
+          </StyledComponentsRegistry>
+        </ReactQueryProvider>
       </body>
     </html>
   );
