@@ -10,12 +10,17 @@
   },
   "dependencies": {
     "@tanstack/react-query-devtools": "^5.76.1",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "@toast-ui/react-editor": "^3.2.3",
     "axios": "^1.8.4",
     "babel-plugin-styled-components": "^2.1.4",
     "next": "15.2.4",
+    "prismjs": "^1.30.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.17"
+    "sass": "^1.89.0",
+    "styled-components": "5.3.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
